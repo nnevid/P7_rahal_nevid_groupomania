@@ -2,11 +2,8 @@ const express = require('express');
 const path = require('path');
 const app = express();
 const userRoutes = require('./routes/user.routes');
-require('dotenv').config({ path: process.cwd() + '/config/.env' })
-
-app.use(express.json());
-
-
+require('dotenv').config({ path: process.cwd() + '/config/.env' });
+const bodyParser = require('body-parser');
 const mongoose = require("mongoose");
 
 mongoose
@@ -29,7 +26,7 @@ app.use((req, res, next) => {
    next();
  });
 
-
- app.use('api/user', userRoutes);
+app.use(express.json());
+app.use('/api/user', userRoutes);
 
  module.exports = app;

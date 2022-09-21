@@ -1,9 +1,13 @@
 const express = require('express');
 const router = express.Router();
-const userCtrl = require('../controllers/auth.controller');
+const authCtrl = require('../controllers/auth.controller');
+const userCtrl = require('../controllers/user.controller');
 
+// Signup
+router.post('/signup', authCtrl.signup);
 
-router.post('/signup', userCtrl.signup);
+//Get all users
+router.get('/', userCtrl.getAllUsers)
 
 
 
