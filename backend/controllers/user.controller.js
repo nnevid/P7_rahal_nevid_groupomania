@@ -1,5 +1,6 @@
 const User = require('../models/User');
 const ObjectID = require('mongoose').Types.ObjectId;
+const fs = require('fs');
 
 //Get all users
 exports.getAllUsers = (req, res, next) => {
@@ -33,4 +34,7 @@ exports.updateUser =  (req, res, next) => {
    }
 };
 
+exports.deleteUser = (req, res, next) => {
+
+}
 
