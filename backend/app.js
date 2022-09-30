@@ -12,8 +12,8 @@ mongoose
     useNewUrlParser: true,
     useUnifiedTopology: true,
   })
-  .then(() => console.log("connection à Mongo DB réussie!"))
-  .catch((err) => console.log("Connexion à MongoDB échouée !", err));
+  .then(() => console.log("successfully connected to MongoDB! 😁"))
+  .catch((err) => console.log("Falied to connecto to MongoDB 😢", err));
 
 app.use((req, res, next) => {
   res.setHeader("Access-Control-Allow-Origin", "*");

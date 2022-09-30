@@ -1,29 +1,34 @@
-const mongoose = require("mongoose");
-const uniqueValidator = require("mongoose-unique-validator");
-const { isEmail } = require("validator");
+const mongoose = require('mongoose');
+const uniqueValidator = require('mongoose-unique-validator');
+const { isEmail } = require('validator');
+
+
+
+
 
 const userSchema = mongoose.Schema(
   {
     pseudo: {
       type: String,
-      required: true,
-      maxLength: 55,
-      minLength: 3,
+      required: [true, `S'il vous plaît, renseignez votre pseudo`],
+      maxlength: 55,
+      minlength: [3, `Votre pseudo doit avoir un minimum de 3 caractères`],
       trim: true,
       unique: true,
     },
     email: {
       type: String,
-      required: true,
-      unique: true,
+      required: [true, `S'il vous plaît, renseignez votre email`],
+      unique: [true, `Cet email a déjà été utilisé`],
       lowercase: true,
-      validate: [isEmail],
+      validate: [isEmail, `S'il vous plaît, renseignez un email valide`]
     },
     password: {
       type: String,
-      required: true,
-      maxLength: 1024,
-      minLength: 8,
+      required: [true, `S'il vous plaît, renseignez votre mot de passe`],
+      minlength: 6,
+     
+     
     },
     picture: {
       type: String,
@@ -37,10 +42,9 @@ const userSchema = mongoose.Schema(
       type: Boolean,
       required: true,
       default: false,
-    }
-   //  likes: {
-   //    type: [String],
-   //  },
+    },
+    tokens: [{type: Object}]
+   
   },
   {
     timestamps: true,
