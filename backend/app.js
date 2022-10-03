@@ -4,8 +4,13 @@ const app = express();
 const mongoose = require("mongoose");
 const userRoutes = require("./routes/user.routes");
 const postRoutes = require('./routes/post.routes');
+const cookieParser = require('cookie-parser')
+const { requireAuth, checkUser} = require('./middleware/auth');
 require("dotenv").config({ path: process.cwd() + "/config/.env" });
 
+
+app.use(cookieParser());
+app.use(express.json());
 
 mongoose
   .connect("mongodb+srv://" + process.env.DB_CONNECT, {
@@ -28,7 +33,10 @@ app.use((req, res, next) => {
   next();
 });
 
-app.use(express.json());
+app.get('*', checkUser);
+app.get('/jwtid', requireAuth, (req, res) => {
+   res.status(200).send(res.locals.user.id)
+})
 app.use("/api/user", userRoutes);
 app.use('/api/post', postRoutes);
 

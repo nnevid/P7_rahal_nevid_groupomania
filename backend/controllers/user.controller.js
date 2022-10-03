@@ -5,7 +5,7 @@ const fs = require('fs');
 //Get all users
 exports.getAllUsers = (req, res, next) => {
   User.find()
-    .select("-password")
+    .select('-password')
     .then((sauces) => res.status(200).json(sauces))
     .catch((error) => res.status(400).json({ error: error }));
 };

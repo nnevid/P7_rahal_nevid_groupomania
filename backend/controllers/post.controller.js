@@ -4,7 +4,9 @@ const fs = require("fs");
 // Get all Posts
 exports.getAllPosts = (req, res, next) => {
   Post.find()
-    .then((sauces) => res.status(200).json(sauces))
+   .select('-userId')
+   .select('-_id')
+   .then((post) => res.status(200).json(post))
     .catch((error) => res.status(400).json({ error: error }));
 };
 

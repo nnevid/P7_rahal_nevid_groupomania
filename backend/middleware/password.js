@@ -13,3 +13,6 @@ module.exports = (req, res, next) => {
       return res.status(400).json({ error: `Le mot de passe doit contenir au moins 6 caractères et au maximum 10`})
    }
 }
+
+// This file was created as a fallback to userSchema minlenght issue, not working, 
+// This file should be used as a plan B
