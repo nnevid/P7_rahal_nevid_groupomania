@@ -1,7 +1,10 @@
 const User = require("../models/User");
 const ObjectID = require("mongoose").Types.ObjectId;
 const fs = require('fs');
-
+const { promisify } = require('util');
+const pipeline = promisify(require('stream').pipeline);
+const {uploadError} = require('../utils/errorHandler');
+const multer = require('multer');
 //Get all users
 exports.getAllUsers = (req, res, next) => {
   User.find()
@@ -43,4 +46,33 @@ exports.deleteUser = (req, res, next) => {
       .then(() => res.status(200).json({message: 'User deleted!'}))
       .catch((err) => res.status(404).send({ message: err }));
    }
+}
+
+
+exports.uploadProfile = async (req, res) => {
+   try{
+      
+      if(
+         req.file.detectedMimeType != 'image/jpg' && 
+         req.file.detectedMimeType != 'image/jpeg' && 
+         req.file.detectedMimeType != 'image/png'
+         )
+         throw Error ('fichier invalide')
+      if(req.file.size> 50000)
+      throw Error (`max size`)
+      const fileName = req.body.name + '.jpg';
+ 
+ await pipeline(
+   req.file.stream,
+   fs.createWriteStream(
+      `${_dirname}/../frontend/public/uploads/profil${fileName}`
+   )
+ )
+ return res.status(201).json({message: 'Téléchargement réussi!'})
+   }
+ catch (err){
+   const errors = uploadError(err)
+   return res.status(400).json({errors});
+ }
+ 
 }

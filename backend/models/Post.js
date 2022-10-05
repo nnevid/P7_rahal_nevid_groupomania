@@ -1,11 +1,11 @@
 const mongoose = require("mongoose");
+const ObjectID = require('mongoose').Types.ObjectId;
 
 
 const postSchema = mongoose.Schema(
    {
    
    userId: { type: String, required: true },   
-   pseudo: {type: String, required: true},
    content: { type: String},
    imageUrl: { type: String },
    likes: { type: Number, default: 0 },
@@ -21,8 +21,8 @@ const postSchema = mongoose.Schema(
       ],
       require: true,
    }
+   
    },
-
    {
       timestamps: true,
     }

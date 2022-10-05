@@ -37,8 +37,8 @@ const userSchema = mongoose.Schema(
       type: Boolean,
       required: true,
       default: false,
-    }
-   //  tokens: [{ type: Object }],
+    },
+    //  tokens: [{ type: Object }],
   },
   {
     timestamps: true,
@@ -55,19 +55,16 @@ userSchema.pre("save", async function (next) {
 });
 
 // Static method to login user
-userSchema.statics.login = async function(email, password) {
-  
-   const user = await this.findOne({ email });
-   if (user) {
-    const match = await bcrypt.compare(password, user.password)
+userSchema.statics.login = async function (email, password) {
+  const user = await this.findOne({ email });
+  if (user) {
+    const match = await bcrypt.compare(password, user.password);
     if (match) {
       return user;
-      
     }
-    throw Error (`Le mot de passe est incorrect`)
-   }
-   throw Error(`Le email est incorrect`)
-} 
-
+    throw Error(`mot de passe incorrect`);
+  }
+  throw Error(`email incorrect`);
+};
 
 module.exports = mongoose.model("User", userSchema);

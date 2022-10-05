@@ -39,5 +39,6 @@ app.get('/jwtid', requireAuth, (req, res) => {
 })
 app.use("/api/user", userRoutes);
 app.use('/api/post', postRoutes);
+app.use('./frontend/public/uploads/profil', express.static(path.join(__dirname, './frontend/public/uploads/profil')));
 
 module.exports = app;

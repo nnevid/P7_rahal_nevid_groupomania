@@ -5,6 +5,7 @@ const User = require("../models/User");
 // Verify authorization with JWT
 const requireAuth = (req, res, next) => {
    const token = req.cookies.jwt
+   
     if(token){
       jwt.verify(token, `${process.env.SECRET_KEY}`, async (err, decodedToken) => {
          const userId = decodedToken.id
@@ -12,8 +13,11 @@ const requireAuth = (req, res, next) => {
             console.log(err.message);
             res.redirect('/login');
          }else{
-            console.log(userId);
-            next();
+            req.auth = {
+               userId: userId
+           };
+           next();
+            
          }
       })
     
