@@ -21,9 +21,9 @@ exports.createPost = (req, res) => {
   delete postObject._userId;
   const post = new Post({
     ...postObject,
-    //  imageUrl: `${req.protocol}://${req.get("host")}/images/${
-    //    req.file.filename
-    //  }`,
+     imageUrl: `${req.protocol}://${req.get("host")}./frontend/public/uploads/posts${
+       req.file.filename
+     }`,
   });
   post
     .save()

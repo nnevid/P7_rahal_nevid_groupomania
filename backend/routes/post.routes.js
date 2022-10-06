@@ -2,12 +2,12 @@ const express = require('express');
 const router = express.Router();
 const postCtrl = require('../controllers/post.controller');
 const { requireAuth, checkUser } = require('../middleware/auth');
-const multer = require('../middleware/multer-posts');
+const multerPosts = require('../middleware/multer-posts');
 
 // CRUD routes for posts
 router.get('/', requireAuth, postCtrl.getAllPosts);
-router.post('/',  requireAuth, multer, postCtrl.createPost);
-router.put('/:id', requireAuth, multer, postCtrl.modifyPost);
+router.post('/',  requireAuth, multerPosts, postCtrl.createPost);
+router.put('/:id', requireAuth, multerPosts, postCtrl.modifyPost);
 router.delete('/:id', requireAuth, postCtrl.deletePost);
 router.get('/:id', requireAuth, postCtrl.getOnePost);
 router.post('/like/:id', requireAuth, postCtrl.likePost);

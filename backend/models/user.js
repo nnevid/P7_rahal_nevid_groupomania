@@ -38,7 +38,6 @@ const userSchema = mongoose.Schema(
       required: true,
       default: false,
     },
-    //  tokens: [{ type: Object }],
   },
   {
     timestamps: true,

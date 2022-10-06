@@ -1,14 +1,13 @@
 const User = require("../models/User");
 const ObjectID = require("mongoose").Types.ObjectId;
-const fs = require('fs');
-const { promisify } = require('util');
-const pipeline = promisify(require('stream').pipeline);
-const {uploadError} = require('../utils/errorHandler');
-const multer = require('multer');
+const fs = require("fs");
+const { uploadError } = require("../utils/errorHandler");
+const multer = require("multer");
+
 //Get all users
 exports.getAllUsers = (req, res, next) => {
   User.find()
-    .select('-password')
+    .select("-password")
     .then((sauces) => res.status(200).json(sauces))
     .catch((error) => res.status(400).json({ error: error }));
 };
@@ -37,42 +36,51 @@ exports.updateUser = (req, res, next) => {
       .catch((err) => res.status(404).send({ message: err }));
   }
 };
-
+// Dete user profile
 exports.deleteUser = (req, res, next) => {
-   if (!ObjectID.isValid(req.params.id))
-   return res.status(400).send("Unknown ID" + req.params.id);
-   else{
-      User.deleteOne({_id: req.params.id})
-      .then(() => res.status(200).json({message: 'User deleted!'}))
+  if (!ObjectID.isValid(req.params.id))
+    return res.status(400).send("Unknown ID" + req.params.id);
+  else {
+    User.deleteOne({ _id: req.params.id })
+      .then(() => res.status(200).json({ message: "User deleted!" }))
       .catch((err) => res.status(404).send({ message: err }));
-   }
-}
+  }
+};
 
-
+// Rename user profile picture after upload(needs multer-config middleware).
 exports.uploadProfile = async (req, res) => {
-   try{
-      
-      if(
-         req.file.detectedMimeType != 'image/jpg' && 
-         req.file.detectedMimeType != 'image/jpeg' && 
-         req.file.detectedMimeType != 'image/png'
-         )
-         throw Error ('fichier invalide')
-      if(req.file.size> 50000)
-      throw Error (`max size`)
-      const fileName = req.body.name + '.jpg';
- 
- await pipeline(
-   req.file.stream,
-   fs.createWriteStream(
-      `${_dirname}/../frontend/public/uploads/profil${fileName}`
-   )
- )
- return res.status(201).json({message: 'Téléchargement réussi!'})
-   }
- catch (err){
-   const errors = uploadError(err)
-   return res.status(400).json({errors});
+  const fileName = req.body.pseudo + ".jpg";
+  try {
+    if (
+      req.file.mimetype != "image/jpg" &&
+      req.file.mimetype != "image/jpeg" &&
+      req.file.mimetype != "image/png"
+    )
+      throw Error("fichier invalide");
+    if (req.file.size > 500000) throw Error(`max size`);
+    
+   //  return res.status(201).json({ message: "Téléchargement réussi!" });
+    
+  } catch (err) {
+    const errors = uploadError(err);
+    return res.status(400).json({ errors });
+  }
+  
+  if (req.file) {
+   fs.renameSync(req.file.path, req.file.destination + fileName);
  }
- 
-}
+  
+try{await User.findOneAndUpdate(
+   req.body.userId,
+   { $set: {picture: './uploads/profil/' + fileName}},
+   {new: true, upsert:true, setDefaultsOnInsert: true},
+     )
+   return res.status(201).json({ message: "Téléchargement réussi!" });
+  ;}
+  catch (err) {
+   
+   return res.status(400).json({ err });
+ }
+  
+  
+};
