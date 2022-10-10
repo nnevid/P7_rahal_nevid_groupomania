@@ -7,11 +7,12 @@ const postRoutes = require('./routes/post.routes');
 const cookieParser = require('cookie-parser')
 const { requireAuth, checkUser} = require('./middleware/auth');
 require("dotenv").config({ path: process.cwd() + "/config/.env" });
+// const cors = require('cors');
 
 
 app.use(cookieParser());
 app.use(express.json());
-
+// app.use(cors());
 mongoose
   .connect("mongodb+srv://" + process.env.DB_CONNECT, {
     useNewUrlParser: true,
@@ -21,7 +22,10 @@ mongoose
   .catch((err) => console.log("Falied to connecto to MongoDB 😢", err));
 
 app.use((req, res, next) => {
-  res.setHeader("Access-Control-Allow-Origin", "*");
+  res.setHeader("Access-Control-Allow-Origin", "http://localhost:4200");
+  res.setHeader(
+   "Access-Control-Allow-Credentials","true"
+ );
   res.setHeader(
     "Access-Control-Allow-Headers",
     "Origin, X-Requested-With, Content, Accept, Content-Type, Authorization"
@@ -30,10 +34,12 @@ app.use((req, res, next) => {
     "Access-Control-Allow-Methods",
     "GET, POST, PUT, DELETE, PATCH, OPTIONS"
   );
+ 
+  
   next();
 });
 
-app.get('*', checkUser);
+// app.get('*', checkUser);
 app.get('/jwtid', requireAuth, (req, res) => {
    res.status(200).send(res.locals.user.id)
 })

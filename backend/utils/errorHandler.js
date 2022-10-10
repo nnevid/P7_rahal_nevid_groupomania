@@ -1,17 +1,14 @@
 // Error handler
-const handleErrors = (err) => {
-   console.log(err.message, err.code);
+module.exports.handleErrors = (err) => {
+   // console.log(err.message, err.code);
    let errors = { email: "", password: "", pseudo: "" };
     
-   //Mail, password incorrects
-   if(err.messsage === "email incorrect"){
-    errors.email = `Cet email est incorrect`;
- }   
-   if(err.messsage === "mot de passe incorrect"){
-      errors.password = `Le mot de passe est incorrect`;
-    
- }   
-  
+  if(err.message.includes('pseudo'))
+  errors.pseudo = 'Ce pseudo est déjà utilisé'
+  if(err.message.includes('mot'))
+  errors.password = 'Le mot de passe est incorrect'
+  if(err.message.includes('email'))
+  errors.email = 'Cet email est incorrect'
  //   duplicate error code
     if (err.code === 11000){
        errors.email = `Cet email est déjà enregistré`;
@@ -26,7 +23,7 @@ const handleErrors = (err) => {
    return errors;
  };
 
-const uploadError = (err) =>{
+module.exports.uploadError = (err) =>{
    let errors = {format:'', maxSize:''}
    if(err.message.includes('fichier invalide'))
    errors.format = 'Format non valide';
@@ -36,4 +33,3 @@ const uploadError = (err) =>{
 }
 
 
- module.exports = {handleErrors, uploadError};

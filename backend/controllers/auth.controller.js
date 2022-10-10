@@ -40,8 +40,8 @@ exports.logIn = async (req, res) => {
       res.cookie("jwt", token, { httpOnly: true, maxAge: maxAge * 1000 });
       res.status(200).json({ user: user._id})
   } catch (err){
-    handleErrors(err);
-      res.status(400).json({error: err.message});
+    const errors = handleErrors(err);
+      res.status(200).json({errors});
   }
 };
 
