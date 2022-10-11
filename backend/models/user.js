@@ -11,12 +11,12 @@ const userSchema = mongoose.Schema(
       maxlength: 55,
       minlength: [3, `Votre pseudo doit avoir un minimum de 3 caractères`],
       trim: true,
-      unique: [true, `Ce pseudo n'est pas disponible`],
+      unique: true,
     },
     email: {
       type: String,
       required: [true, `S'il vous plaît, renseignez votre email`],
-      unique: [true, `Cet email a déjà été utilisé`],
+      unique: true,
       lowercase: true,
       validate: [isEmail, `S'il vous plaît, renseignez un email valide`],
     },
@@ -61,7 +61,7 @@ userSchema.statics.login = async function (email, password) {
     if (match) {
       return user;
     }
-    throw Error(`mot de passe incorrect`);
+    throw Error(`wrong password`);
   }
   throw Error(`email incorrect`);
 };

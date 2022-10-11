@@ -39,7 +39,7 @@ app.use((req, res, next) => {
   next();
 });
 
-// app.get('*', checkUser);
+app.get('*', checkUser);
 app.get('/jwtid', requireAuth, (req, res) => {
    res.status(200).send(res.locals.user.id)
 })

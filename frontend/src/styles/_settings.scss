@@ -1,14 +1,14 @@
 @font-face {
   font-family: "font-1";
-  src: url(./assets/fonts/JosefinSans-ExtraLight.ttf);
+  src: url(./assets/fonts/Lato-Regular.ttf);
 }
 @font-face {
   font-family: "font-2";
-  src: url(./assets/fonts/JosefinSans-Regular.ttf);
+  src: url(./assets/fonts/Lato-Light.ttf);
 }
 @font-face {
   font-family: "font-3";
-  src: url(./assets/fonts/JosefinSans-Bold.ttf);
+  src: url(./assets/fonts/Lato-Black.ttf);
 }
 
 $font-1: "font-1", sans-serif;
@@ -94,6 +94,7 @@ body {
   font-weight: bold;
 }
 .success {
+  margin-top: 15px; 
   color: green;
   font-weight: bold;
 }

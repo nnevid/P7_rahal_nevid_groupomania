@@ -23,10 +23,11 @@ exports.signUp = async (req, res) => {
     const user = await User.create({ email, password, pseudo });
     const token = createToken(user._id);
     res.cookie("jwt", token, { httpOnly: true, maxAge: maxAge * 1000 });
-    res.status(201).json(user);
+    res.status(201).json(user._id);
   } catch (err) {
     const errors = handleErrors(err);
-    res.status(400).json({ errors });
+   //  console.log(errors);
+    res.status(200).json({ errors });
   }
 };
 
@@ -48,11 +49,11 @@ exports.logIn = async (req, res) => {
 // Log Out  
 exports.logOut = (req, res) => {
 res.cookie('jwt', '', {maxAge: 1});
-return res.json({
-   success: true,
-   message: `Déconnexion réussie`
-})
-// res.redirect('/');
+// return res.json({
+//    success: true,
+//    message: `Déconnexion réussie`
+// })
+res.redirect('/profil');
 
 };
 
