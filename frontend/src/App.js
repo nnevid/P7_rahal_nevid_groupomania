@@ -4,6 +4,7 @@ import Routes from "./components/Routes";
 import axios from "axios";
 import { useDispatch } from "react-redux";
 import { getUser } from "./store/user";
+
 function App() {
   const [uid, setUid] = useState(null);
   const dispatch = useDispatch();

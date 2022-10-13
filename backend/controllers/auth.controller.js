@@ -49,10 +49,8 @@ exports.logIn = async (req, res) => {
 // Log Out  
 exports.logOut = (req, res) => {
 res.cookie('jwt', '', {maxAge: 1});
-// return res.json({
-//    success: true,
-//    message: `Déconnexion réussie`
-// })
+
+console.log(`Déconnexion réussie`);
 res.redirect('/profil');
 
 };

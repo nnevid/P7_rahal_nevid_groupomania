@@ -2,13 +2,15 @@
 import React, { useContext } from 'react';
 import Log from '../components/Log'
 import {UidContext} from '../components/AppContext';
+import UserProfil from '../components/Profil/UserProfil';
+
 
 const Profil = () => {
    const uid= useContext(UidContext);
    return (
       <div className='profil-page'>
          {uid ? (
-            <h1>UPDATE PAGE</h1>
+            <UserProfil />
          ) : (
          <div className='log-container'>
          <Log login={false} signup={true}  />

@@ -36,7 +36,7 @@ exports.updateUser = (req, res, next) => {
       .catch((err) => res.status(404).send({ message: err }));
   }
 };
-// Dete user profile
+// Delete user profile
 exports.deleteUser = (req, res, next) => {
   if (!ObjectID.isValid(req.params.id))
     return res.status(400).send("Unknown ID" + req.params.id);
@@ -50,6 +50,7 @@ exports.deleteUser = (req, res, next) => {
 // Rename user profile picture after upload(needs multer-config middleware).
 exports.uploadProfile = async (req, res) => {
   const fileName = req.body.pseudo + ".jpg";
+  
   try {
     if (
       req.file.mimetype != "image/jpg" &&
@@ -68,6 +69,7 @@ exports.uploadProfile = async (req, res) => {
   
   if (req.file) {
    fs.renameSync(req.file.path, req.file.destination + fileName);
+   console.log(fileName);
  }
   
 try{await User.findOneAndUpdate(
