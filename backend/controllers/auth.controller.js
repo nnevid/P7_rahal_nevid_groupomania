@@ -4,13 +4,6 @@ const User = require("../models/User");
 const {handleErrors} = require('../utils/errorHandler')
 require("dotenv").config({ path: process.cwd() + "/config/.env" });
 
-
-
-
-
-
-
-
 const maxAge = 3 * 24 * 60 * 60;
 const createToken = (id) => {
   return jwt.sign({ id }, process.env.SECRET_KEY, { expiresIn: maxAge });
@@ -39,7 +32,8 @@ exports.logIn = async (req, res) => {
       const user = await User.login(email, password);
       const token = createToken(user._id);
       res.cookie("jwt", token, { httpOnly: true, maxAge: maxAge * 1000 });
-      res.status(200).json({ user: user._id})
+      res.status(200).json({user})
+      
   } catch (err){
     const errors = handleErrors(err);
       res.status(200).json({errors});
@@ -48,10 +42,10 @@ exports.logIn = async (req, res) => {
 
 // Log Out  
 exports.logOut = (req, res) => {
-res.cookie('jwt', '', {maxAge: 1});
+res.cookie('jwt', 'none', {maxAge: 1, httpOnly:true,});
 
 console.log(`Déconnexion réussie`);
-res.redirect('/profil');
+res.redirect('/');
 
 };
 

@@ -49,7 +49,7 @@ exports.deleteUser = (req, res, next) => {
 
 // Rename user profile picture after upload(needs multer-config middleware).
 exports.uploadProfile = async (req, res) => {
-  const fileName = req.body.pseudo + ".jpg";
+  const fileName = req.body.userId + ".jpg";
   
   try {
     if (

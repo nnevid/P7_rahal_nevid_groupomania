@@ -1,17 +1,25 @@
 import React, { useState } from "react";
 import axios from "axios";
+// import { useDispatch, useSelector } from "react-redux";
+// import { userInfo } from "../../redux/features/authSlice";
+
+const initialState = {
+  email: "",
+  password: "",
+};
 
 const LogInForm = () => {
   //   useState settings
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
+  
+  const [formValue, setFormValue] = useState(initialState);
+  const { email, password } = formValue;
+  const emailError = document.querySelector(".email.error");
+  const passwordError = document.querySelector(".password.error");
 
   // form function
-  const handleLogin = (e) => {
+   const handleSubmit = (e) => {
     e.preventDefault();
-
-    const emailError = document.querySelector(".email.error");
-    const passwordError = document.querySelector(".password.error");
+   
     axios({
       method: "post",
       url: `${process.env.REACT_APP_API_URL}api/user/login`,
@@ -22,26 +30,31 @@ const LogInForm = () => {
       },
     })
       .then((res) => {
-         console.log(res.data.errors);
-        if (res.data.errors) {
-          emailError.innerHTML = res.data.errors.email;
-          passwordError.innerHTML = res.data.errors.password;
-        } else {
-          window.location = "/";
-        }
+         if (res.data.errors) {
+            emailError.innerHTML = res.data.errors.email;
+            passwordError.innerHTML = res.data.errors.password;
+         } 
+         else{
+            window.location = "/";
+         }
       })
       .catch((err) => {});
+   
+  };
+  const onInputChange = (e) => {
+    let { name, value } = e.target;
+    setFormValue({ ...formValue, [name]: value });
   };
   // Form Layout
   return (
-    <form action="" onSubmit={handleLogin} id="sign-up-form">
+    <form action="" onSubmit={handleSubmit} id="sign-up-form">
       <label htmlFor="email">Email</label>
       <br />
       <input
         type="text"
         name="email"
         id="email"
-        onChange={(e) => setEmail(e.target.value)}
+        onChange={onInputChange}
         value={email}
       />
       <div className="email error"> </div>
@@ -52,12 +65,13 @@ const LogInForm = () => {
         type="password"
         name="password"
         id="password"
-        onChange={(e) => setPassword(e.target.value)}
+        onChange={onInputChange}
         value={password}
       />
       <div className="password error"></div>
       <br />
       <input type="submit" value="Se connecter" />
+      
     </form>
   );
 };

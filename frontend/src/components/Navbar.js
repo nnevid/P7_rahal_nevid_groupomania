@@ -7,7 +7,7 @@ import {useSelector} from 'react-redux';
 
 const Navbar = () => {
    const uid = useContext(UidContext);
-   const {user} = useSelector((store) => store.user);
+   const user = useSelector((store) => (store.userInfo.user));
   
  
    
@@ -30,7 +30,7 @@ const Navbar = () => {
             <li></li>
             <li className="welcome">
               <NavLink exact to="/profil">
-                <h5> Bienvenue {user.pseudo} 👋🏽 </h5>
+                <h5> Bienvenue {user.pseudo}👋🏽 </h5>
                 
               </NavLink>
             </li>
