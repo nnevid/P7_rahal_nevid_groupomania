@@ -1,17 +1,16 @@
-import React, { useState, useContext } from "react";
+import React, { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { uploadPicture } from "../../redux/features/authSlice";
-// import axios from "axios";
+import { uploadPicture } from "../../redux/actions/user.actions";
 import { UidContext } from "../../components/AppContext";
 // import { UPLOAD_PICTURE } from "../../redux/features/authSlice";
 
 const UploadImg = () => {
   const [file, setFile] = useState();
   const dispatch = useDispatch();
-  const user = useSelector((store) => store.userInfo.user);
-  const uid = useContext(UidContext);
+  const user = useSelector((store) => store.userData);
+ 
 
-  //  On Submit function
+//  On Submit function
   const handlePicture = async (e) => {
     e.preventDefault();
     const data = new FormData();
@@ -19,7 +18,7 @@ const UploadImg = () => {
     data.append("pseudo", user.pseudo);
     data.append("userId", user._id);
    // const datUid = ({data, uid})
-    dispatch(uploadPicture( data, uid ));
+    dispatch(uploadPicture( data, user._id ));
   };
 
   //  Upload-Picture Form Layout

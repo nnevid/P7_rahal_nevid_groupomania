@@ -1,34 +1,35 @@
-import React from 'react';
-// import axios from 'axios';
-// import cookie from "js-cookie";
+import React from "react";
+import axios from "axios";
+import cookie from "js-cookie";
 
-import { useDispatch } from "react-redux";
-import { logout } from '../../redux/features/authSlice';
-// const removeCookie = (key) => {
-//   if (window !== "undefined") {
-//     cookie.remove(key, { expires: 1 });
-//   }
-// };
-
-
-
-// Logout
 const Logout = () => {
-   const dispatch = useDispatch()
- 
-   const handleLogout = () => {
-      dispatch(logout());
-    };
-   
-   return (
-     <li onClick={handleLogout}>
-      
+  const removeCookie = (key) => {
+    if (window !== "undefined") {
+      cookie.remove(key, { expires: 1 });
+    }
+  };
+
+  // Logout
+  const logout = async () => {
+    await axios({
+      method: "get",
+      url: `${process.env.REACT_APP_API_URL}api/user/logout`,
+      withCredentials: true,
+    })
+      .then(() => {
+         removeCookie("jwt")
+      })
+      .catch((err) => {
+         console.log(err.message);
+      });
+      window.location = "/";
+  };
+
+  return (
+    <li onClick={logout}>
       <img src="./img/icons/logout.svg" alt="logout icon" />
       <span className="nav-container__logs">Logout</span>
-     </li>
-     
-     
-   );
+    </li>
+  );
 };
-
 export default Logout;

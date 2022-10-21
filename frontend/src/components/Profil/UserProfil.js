@@ -2,12 +2,12 @@ import React, { useState } from "react";
 import LeftNav from "../LeftNav";
 import { useSelector, useDispatch } from "react-redux";
 import UploadImg from "./UploadImg";
-import { userBio, UPDATE_BIO } from "../../redux/features/authSlice";
+import { updateBio } from "../../redux/actions/user.actions";
 import axios from "axios";
 import Confirm from "./Confirm";
 
 const UserProfil = () => {
-  const user = useSelector((store) => store.userInfo.user);
+  const user = useSelector((store) => store.userData);
   const [bio, setBio] = useState("");
   const [updateForm, setUpdateForm] = useState(false);
   const [confirm, setConfirm] = useState({
@@ -25,19 +25,11 @@ const UserProfil = () => {
 
   // Bio Update Function
   const handleUpdate = () => {
-    // dispatch(updateBio(bio));
+   dispatch(updateBio(user._id, bio));
     setUpdateForm(false);
-    return axios({
-      method: "put",
-      url: `${process.env.REACT_APP_API_URL}api/user/` + user._id,
-      data: { bio },
-    })
-      .then((res) => {
-        dispatch(userBio({ type: UPDATE_BIO, payload: bio }));
-        window.location = "/profil";
-      })
-      .catch((err) => console.error(err));
-  };
+    
+    }
+//   Confirmation Pop-up
   const handleConfirm = (message, isLoading) => {
     setConfirm({
       message,
@@ -47,6 +39,7 @@ const UserProfil = () => {
   const handleDelete = () => {
     handleConfirm("Supprimer votre compte Grupomania ?", true);
   };
+
   const realConfirm = async (yes) => {
     if (yes) {
      await axios({

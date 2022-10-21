@@ -7,7 +7,8 @@ import {useSelector} from 'react-redux';
 
 const Navbar = () => {
    const uid = useContext(UidContext);
-   const user = useSelector((store) => (store.userInfo.user));
+   const user = useSelector((store) => (store.userData));
+   
   
 
   return (

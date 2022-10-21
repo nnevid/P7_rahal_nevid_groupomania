@@ -3,7 +3,18 @@ import ReactDOM from "react-dom/client";
 import App from "./App";
 import "./styles/index.scss";
 import { Provider } from "react-redux";
-import store from "./redux/store";
+import { applyMiddleware, createStore } from "redux";
+import { composeWithDevTools } from "redux-devtools-extension";
+import rootReducer  from "./redux/reducers";
+import thunk from "redux-thunk";
+import { getUsers } from "./redux/actions/user.actions";
+
+const store = createStore(
+   rootReducer,
+   composeWithDevTools(applyMiddleware(thunk))
+ );
+
+store.dispatch(getUsers());
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
