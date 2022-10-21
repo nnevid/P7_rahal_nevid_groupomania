@@ -15,12 +15,11 @@ const UploadImg = () => {
   const handlePicture = async (e) => {
     e.preventDefault();
     const data = new FormData();
-
     data.append("file", file);
     data.append("pseudo", user.pseudo);
     data.append("userId", user._id);
-
-    dispatch(uploadPicture({ data, uid }));
+   // const datUid = ({data, uid})
+    dispatch(uploadPicture( data, uid ));
   };
 
   //  Upload-Picture Form Layout

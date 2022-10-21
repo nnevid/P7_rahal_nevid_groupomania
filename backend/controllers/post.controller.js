@@ -6,8 +6,8 @@ const fs = require("fs");
 // Get all Posts
 exports.getAllPosts = (req, res, next) => {
   Post.find()
-    .select("-userId")
-    .select("-_id")
+   //  .select("-userId")
+   //  .select("-_id")
     .sort({ createdAt: -1 })
     .then((post) => res.status(200).json(post))
     .catch((error) => res.status(400).json({ error: error }));
@@ -16,12 +16,12 @@ exports.getAllPosts = (req, res, next) => {
 // Create Post
 exports.createPost = (req, res) => {
   const postObject = req.body;
-  console.log(req.body);
+  console.log(req.file);
   delete postObject._id;
   delete postObject._userId;
   const post = new Post({
     ...postObject,
-     imageUrl: `${req.protocol}://${req.get("host")}./frontend/public/uploads/posts${
+     imageUrl: `${req.protocol}://${req.get("host")}./frontend/public/uploads/posts/${
        req.file.filename
      }`,
   });

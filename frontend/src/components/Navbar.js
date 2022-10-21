@@ -9,10 +9,7 @@ const Navbar = () => {
    const uid = useContext(UidContext);
    const user = useSelector((store) => (store.userInfo.user));
   
- 
-   
-//   console.log(user);
-// console.log(useSelector((store)=>{console.log(store);}))
+
   return (
     <nav>
       <div className="nav-container">

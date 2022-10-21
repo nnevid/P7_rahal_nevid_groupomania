@@ -3,7 +3,8 @@ import { UidContext } from "./components/AppContext";
 import Routes from "./components/Routes";
 import axios from "axios";
 import { useDispatch } from "react-redux";
-import { clearUser, userInfo } from "./redux/features/authSlice"
+import { clearUser, userInfo, usersInfo } from "./redux/features/authSlice";
+
 
 function App() {
   const [uid, setUid] = useState(null);
@@ -21,18 +22,17 @@ function App() {
     };
     fetchToken();
     if (uid) {
-       
-       dispatch(userInfo(uid));
-   }if (!uid){
-      dispatch(clearUser())
-   }
+      dispatch(userInfo(uid));
+      dispatch(usersInfo());
+    }
+    if (!uid) {
+      dispatch(clearUser());
+    }
   }, [uid, dispatch]);
 
   return (
     <UidContext.Provider value={uid}>
       <Routes />
-
-    
     </UidContext.Provider>
   );
 }

@@ -1,7 +1,8 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import axios from "axios";
-import * as api from "../api";
 
+
+//Actions
 export const userInfo = createAsyncThunk("auth/login", async (uid) => {
   try {
     const response = await axios.get(
@@ -9,6 +10,17 @@ export const userInfo = createAsyncThunk("auth/login", async (uid) => {
     );
     // toast.success("Connexion réussie 💻", {position: toast.POSITION.TOP_RIGHT}); à voir plus tard...
 
+    return response.data;
+  } catch (err) {
+    console.log(err);
+  }
+});
+
+export const usersInfo = createAsyncThunk("allusers/data", async () => {
+  try {
+    const response = await axios.get(
+      `${process.env.REACT_APP_API_URL}api/user/`
+    );
     return response.data;
   } catch (err) {
     console.log(err);
@@ -27,41 +39,49 @@ export const logout = createAsyncThunk("auth/logout", async (dispatch) => {
     .catch((err) => console.log(err.message));
   window.location = "/profil";
 });
-// export const uploadPicture = createAsyncThunk("UPLOAD_PICTURE", async ( id) => {
-
-//   console.log('id', id);
-// await  axios.get(`${process.env.REACT_APP_API_URL}api/user/${id}` )
-
-//       //  .then(async (res) => {
-//       //    const dispatch = await axios
-//       //        .get(`${process.env.REACT_APP_API_URL}api/user/`);
-//       //     dispatch({ type: UPLOAD_PICTURE, payload: res.data.picture });
-//       //  })
-//       //  .catch((err) => console.log(err.message));
-
-//  });
 
 export const uploadPicture = createAsyncThunk(
   "UPLOAD_PICTURE",
-  async ({ data, uid }) => {
+  async (data, thunk) => {
     try {
-      await axios.post(`${process.env.REACT_APP_API_URL}api/user/upload`, data);
-
-      const res = axios.get(`${process.env.REACT_APP_API_URL}api/user/${uid}`);
-      return res.data;
+        await axios({
+        method: "post",
+        url: `${process.env.REACT_APP_API_URL}api/user/upload`,
+        data: data,
+        withCredentials: true,
+      })
+      .then(()=>{
+         thunk.dispatch(userInfo())
+      const state = thunk.getState();
+      console.log(state);
+      })
+      .catch(()=>{})
+      
+      // thunk.getState
     } catch {}
   }
 );
-
-export const updateBio = createAsyncThunk("UPDATE_BIO", async (bio, thunk ) => {
-  
-  try{
-    
-      return bio
-  }
-  catch{ }
-   
+// export const updatePicture = createAsyncThunk("update/picture", async (uid) => {
+//   try {
+//     const res = axios({
+//       method: "get",
+//       url: `${process.env.REACT_APP_API_URL}api/user/${uid}`,
+//       withCredentials: true,
+//     });
+//     console.log(res);
+//     return res.data;
+//   } catch (err){console.log(err);}
+// });
+export const updateBio = createAsyncThunk("UPDATE_BIO", async (bio, thunk) => {
+  try {
+    return bio;
+  } catch {}
 });
+
+
+
+
+
 
 const initialUser = localStorage.getItem("user")
   ? JSON.parse(localStorage.getItem("user"))
@@ -70,12 +90,12 @@ const initialUser = localStorage.getItem("user")
 export const UPLOAD_PICTURE = "UPLOAD_PICTURE";
 export const UPDATE_BIO = "UPDATE_BIO";
 
-// Slice REdux
+// Slice Redux
 const userSlice = createSlice({
   name: "userInfo",
   initialState: {
     user: initialUser,
-    // user: null,
+    users: {},
     error: "",
     loading: false,
   },
@@ -119,12 +139,26 @@ const userSlice = createSlice({
       state.loading = false;
       localStorage.setItem("user", JSON.stringify({ ...action.payload }));
       state.user = action.payload;
-      console.log("userInfo reducer");
+      // console.log("userInfo reducer");
     },
     [userInfo.rejected]: (state, action) => {
       state.loading = false;
       state.error = action.payload.message;
     },
+    [usersInfo.pending]: (state, action) => {
+      state.loading = true;
+    },
+    [usersInfo.fulfilled]: (state, action) => {
+      state.loading = false;
+      localStorage.setItem("user", JSON.stringify({ ...action.payload }));
+      state.users = action.payload;
+      // console.log("userInfo reducer");
+    },
+    [usersInfo.rejected]: (state, action) => {
+      state.loading = false;
+      state.error = action.payload.message;
+    },
+
     [uploadPicture.pending]: (state, action) => {
       state.loading = true;
     },
