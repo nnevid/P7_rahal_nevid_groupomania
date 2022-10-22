@@ -7,7 +7,7 @@ import { UidContext } from "../../components/AppContext";
 const UploadImg = () => {
   const [file, setFile] = useState();
   const dispatch = useDispatch();
-  const user = useSelector((store) => store.userData);
+  const user = useSelector((store) => store.userData.user);
  
 
 //  On Submit function

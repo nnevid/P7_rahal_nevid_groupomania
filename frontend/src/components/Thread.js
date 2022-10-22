@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { getPosts } from "../redux/actions/posts.actions";
-
+import { getPosts } from "../redux/actions/post.actions";
 import Card from "./Post/Card";
 
 // import { UidContext } from "./AppContext";
@@ -9,7 +8,7 @@ import Card from "./Post/Card";
 const Thread = () => {
   const [loadPost, setLoadPost] = useState(true);
   const dispatch = useDispatch();
-//   const posts = useSelector((store) => store.Posts.posts);
+  const posts = useSelector((store) => store.postData);
   // const uid = useContext(UidContext);
 //   console.log(posts);
 const isEmpty = (value) => {
@@ -32,9 +31,9 @@ const isEmpty = (value) => {
   return (
   <div className="thread-container">
    <ul>
-     {/* {!isEmpty(posts[0]) && posts.map((post) => {
+     {!isEmpty(posts[0]) && posts.map((post) => {
       return <Card post={post} key={post._id}/>
-     })} */}
+     })}
       
    </ul>
   </div>

@@ -21,7 +21,7 @@ exports.createPost = (req, res) => {
   delete postObject._userId;
   const post = new Post({
     ...postObject,
-     imageUrl: `${req.protocol}://${req.get("host")}./frontend/public/uploads/posts/${
+     imageUrl: `./uploads/posts/${
        req.file.filename
      }`,
   });
@@ -36,7 +36,7 @@ exports.modifyPost = (req, res) => {
   const thingPost = req.file
     ? {
         ...JSON.parse(req.body.thing),
-        imageUrl: `${req.protocol}://${req.get("host")}/images/${
+        imageUrl: `./uploads/posts/${
           req.file.filename
         }`,
       }
@@ -76,14 +76,15 @@ exports.deletePost = (req, res) => {
     .then((post) => {
       User.findOne({ _id: req.auth.userId })
         .then((user) => {
-          if (post.userId != req.auth.userId && !user.isAdmin === true) {
+          if (post.userId != user._id && !user.isAdmin === true) {
             res.status(401).json({
               message:
                 "401, Vous n'êtes pas authorisé à supprimer cette publication",
             });
           } else {
-            const filename = post.imageUrl.split("/images/")[1];
-            fs.unlink(`images/${filename}`, () => {
+            const filename = post.imageUrl.split("./uploads/posts/")[1];
+
+            fs.unlink(`./uploads/posts/${filename}`, () => {
               Post.deleteOne({ _id: req.params.id })
                 .then(() =>
                   res.status(200).json({ message: "Publication supprimée" })

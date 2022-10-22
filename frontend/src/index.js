@@ -7,7 +7,7 @@ import { applyMiddleware, createStore } from "redux";
 import { composeWithDevTools } from "redux-devtools-extension";
 import rootReducer  from "./redux/reducers";
 import thunk from "redux-thunk";
-import { getUsers } from "./redux/actions/user.actions";
+import { getUsers } from "./redux/actions/users.actions";
 
 const store = createStore(
    rootReducer,

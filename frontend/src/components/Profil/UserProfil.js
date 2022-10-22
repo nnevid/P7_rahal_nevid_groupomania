@@ -8,6 +8,8 @@ import Confirm from "./Confirm";
 
 const UserProfil = () => {
   const user = useSelector((store) => store.userData);
+  console.log(user.pseudo);
+  
   const [bio, setBio] = useState("");
   const [updateForm, setUpdateForm] = useState(false);
   const [confirm, setConfirm] = useState({
@@ -87,7 +89,7 @@ const UserProfil = () => {
               </>
             )}
             <div>
-              <h4>Membre depuis {userDate}</h4>
+              <h4>Membre depuis le {userDate}</h4>
             </div>
             <br />
             <button onClick={handleDelete}>Supprimer mon profil</button>

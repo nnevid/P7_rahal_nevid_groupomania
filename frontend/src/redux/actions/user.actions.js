@@ -1,7 +1,6 @@
 import axios from "axios";
 
 export const GET_USER = "GET_USER";
-export const GET_ALL_USERS = "GET_ALL_USERS";
 export const UPLOAD_PICTURE = "UPLOAD_PICTURE";
 export const UPDATE_BIO = "UPDATE_BIO";
 export const GET_USER_ERRORS = "GET_USER_ERRORS";
@@ -17,16 +16,7 @@ export const getUser = (uid) => {
        .catch((err) => console.log(err));
    };
  };
- export const getUsers = () => {
-   return (dispatch) => {
-     return axios
-       .get(`${process.env.REACT_APP_API_URL}api/user`)
-       .then((res) => {
-         dispatch({ type: GET_ALL_USERS, payload: res.data });
-       })
-       .catch((err) => console.log(err));
-   };
- };
+
 
  export const uploadPicture = (data, id) => {
    return (dispatch) => {

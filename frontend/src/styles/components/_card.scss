@@ -53,6 +53,7 @@
       display: flex;
       justify-content: space-between;
       margin: 2px 0 4px;
+      flex-direction: column;
 
       @media screen and(max-width: 590px) {
         margin: 12px 0 14px;
@@ -159,6 +160,7 @@
       div {
         padding: 5px 9px;
         margin-left: 5px;
+        margin-top: 20px;
         background: $color-2;
         border-radius: 50px;
         transition: 0.1s;
