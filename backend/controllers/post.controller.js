@@ -106,45 +106,76 @@ exports.getOnePost = (req, res) => {
 };
 
 // Like and unlike Post
-exports.likePost = (req, res) => {
-  const postId = req.params.id;
+exports.likePost = (req, res) => { 
+   const postId = req.params.id;
   const userId = req.body.userId;
   const like = req.body.like;
 
   if (like === 1) {
-    Post.updateOne(
+    Post.findByIdAndUpdate(
       { _id: postId },
       {
         $inc: { likes: like },
         $push: { usersLiked: userId },
       }
     )
-      .then((post) =>
-        res.status(200).json({ message: "J'aime cette publication!" + post })
+      .then((post) => res.status(200).json(post)
       )
-      .catch((error) => res.status(500).json({ error }));
-  } else {
-    Post.findOne({ _id: postId })
-      .then((post) => {
-        if (post.usersLiked.includes(userId)) {
-          Post.updateOne(
-            { _id: postId },
-            {
-              $pull: { usersLiked: userId },
-              $inc: { likes: -1 },
-            }
-          )
-            .then((post) => {
-              res
-                .status(200)
-                .json({ message: "Je n'aime plus cette publication!" + post });
-            })
-            .catch((error) => res.status(500).json({ error }));
-        }
-      })
-      .catch((error) => res.status(401).json({ error }));
-  }
-};
+      .catch((error) => res.status(500).json(error.message ));
+   }
+
+}
+  
+   
+exports.unLikePost = (req, res) => {
+   const postId = req.params.id;
+   const userId = req.body.userId;
+   // const like = req.body.like;
+   Post.findOne({ _id: postId })
+   .then((post) => {
+      if (post.usersLiked.includes(userId)) {
+        Post.findByIdAndUpdate(
+          { _id: postId },
+          {
+            $pull: { usersLiked: userId },
+            $inc: { likes: -1 },
+          },
+          {new : true}
+        )
+          .then((post) => {
+            res
+              .status(200)
+              .json(post);
+          })
+          .catch((error) => res.status(500).json({ error }));
+      }
+    })
+    .catch((error) => res.status(401).json({ error: message })); 
+ }
+
+
+//   } else {
+//     Post.findOne({ _id: postId })
+//       .then((post) => {
+//         if (post.usersLiked.includes(userId)) {
+//           Post.findByIdAndUpdate(
+//             { _id: postId },
+//             {
+//               $pull: { usersLiked: userId },
+//               $inc: { likes: -1 },
+//             }
+//           )
+//             .then((post) => {
+//               res
+//                 .status(200)
+//                 .json({ message: "Je n'aime plus cette publication!" + {post} });
+//             })
+//             .catch((error) => res.status(500).json({ error }));
+//         }
+//       })
+//       .catch((error) => res.status(401).json({ error }));
+//   }
+// };
 
 exports.commentPost = (req, res) => {
   if (!ObjectID.isValid(req.params.id))

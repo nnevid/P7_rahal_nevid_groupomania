@@ -1,10 +1,11 @@
-// import axios from "axios";
+import axios from "axios";
 import React, { useEffect, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
-import { updatePost, deletePost } from "../../redux/actions/post.actions";
+import { updatePost } from "../../redux/actions/post.actions";
 // import DeletePost from "./DeletePost";
 import Confirm from "../Profil/Confirm";
-// import { DELETE_POST } from "../../redux/actions/post.actions";
+import { DELETE_POST } from "../../redux/actions/post.actions";
+import LikeButton from "./LikeButton";
 
 const Card = ({ post }, props) => {
   const dispatch = useDispatch();
@@ -15,29 +16,38 @@ const Card = ({ post }, props) => {
   const [textUpdate, setTextUpdate] = useState(null);
   const [showComments, setShowComments] = useState(false);
   const [confirm, setConfirm] = useState({
-   message: "",
-   isLoading: false,
- });
- const handleConfirm = (message, isLoading) => {
-   setConfirm({
-     message,
-     isLoading,
-   });
- };
- const handleDelete = () => {
-   handleConfirm("Voulez-vous supprimer votre post ?", true);
- };
+    message: "",
+    isLoading: false,
+  });
+  const handleConfirm = (message, isLoading) => {
+    setConfirm({
+      message,
+      isLoading,
+    });
+  };
+  const handleDelete = () => {
+    handleConfirm("Voulez-vous supprimer votre post ?", true);
+  };
 
- const realConfirm = async (yes) => {
-   if (yes) {
-      dispatch(deletePost(post._id, user._id));
-      
-     window.location = "/";
-     handleConfirm("", false);
-   } else {
-     handleConfirm("", false);
-   }
- };
+  const realConfirm = async (yes) => {
+    if (yes) {
+      // dispatch(deletePost(post._id, user._id));
+
+      await axios({
+        method: "delete",
+        url: `${process.env.REACT_APP_API_URL}api/post/${post._id}`,
+        withCredentials: true,
+      })
+        .then((res) => {
+          dispatch({ type: DELETE_POST, payload: post._id });
+          window.location = "/";
+          handleConfirm("", false);
+        })
+        .catch((err) => console.log(err.message));
+    } else {
+      handleConfirm("", false);
+    }
+  };
 
   const updateItem = () => {
     if (textUpdate) {
@@ -111,35 +121,50 @@ const Card = ({ post }, props) => {
                     onChange={(e) => setTextUpdate(e.target.value)}
                   />
                   <div className="button-container">
-                    <button className="btn" onClick={updateItem}>
-                      Valider modification
-                    </button>
+                    <button onClick={updateItem}>Valider modification</button>
                   </div>
                 </div>
               )}
-              
+
               {user._id === post.userId && (
                 <div className="button-container">
                   <div onClick={() => setIsUpdated(!isUpdated)}>
                     <span>Modifier mon post</span>
                     <img src="./img/icons/edit.svg" alt="edit" />
                   </div>
-                  <div onClick={handleDelete}>
-                  <img src="./img/icons/trash.svg" alt="trash" />
 
-                  </div>
-                  {/* <button onClick={handleDelete}>Supprimer mon post</button> */}
-                  {/* <img onClick={handleDelete} src="./img/icons/trash.svg" alt="trash" /> */}
-            {confirm.isLoading && (
-              <Confirm onConfirm={realConfirm} message={confirm.message} />
-            )}
+                  <button className="" onClick={handleDelete}>
+                    Supprimer mon post{" "}
+                    <img src="./img/icons/trash.svg" alt="trash" />
+                  </button>
+                  {confirm.isLoading && (
+                    <Confirm
+                      onConfirm={realConfirm}
+                      message={confirm.message}
+                    />
+                  )}
                 </div>
               )}
               {post.imageUrl && (
                 <img src={post.imageUrl} alt="card-pic" className="card-pic" />
               )}
+              
             </div>
+            <div className="card-footer">
+               <div className="comment-icon">
+               <img
+                  onClick={() => setShowComments(!showComments)}
+                  src="./img/icons/message1.svg"
+                  alt="comment"
+                />
+                   <span>{post.comments.length}</span>
+               </div>
+               <LikeButton post={post} />
+              
+            </div>
+            
           </div>
+          
         </>
       )}
     </li>

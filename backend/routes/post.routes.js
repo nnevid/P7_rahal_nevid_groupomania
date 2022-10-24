@@ -11,6 +11,7 @@ router.put('/:id', requireAuth, multerPosts, postCtrl.modifyPost);
 router.delete('/:id', requireAuth, postCtrl.deletePost);
 router.get('/:id', requireAuth, postCtrl.getOnePost);
 router.post('/like/:id', requireAuth, postCtrl.likePost);
+router.post('/unlike/:id', requireAuth, postCtrl.unLikePost);
 
 // comments pas activés pour l'instant
 router.patch('/comment/:id', requireAuth, postCtrl.commentPost);

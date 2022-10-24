@@ -106,6 +106,7 @@
       span {
         font-style: italic;
         font-family: $font-1;
+        margin-right: 10px;
 
         @media screen and(max-width: 440px) {
           transform: translate(52px, -20px);
@@ -141,6 +142,7 @@
         }
       }
     }
+
     .card-pic {
       width: 100%;
       border-radius: 6px;
@@ -156,15 +158,18 @@
     .button-container {
       justify-content: flex-end;
       display: flex;
+      align-items: baseline;
 
       div {
-        padding: 5px 9px;
+        padding: 8px 5px 8px 5px;
         margin-left: 5px;
         margin-top: 20px;
         background: $color-2;
         border-radius: 50px;
         transition: 0.1s;
         cursor: pointer;
+        display: flex;
+        align-items: center;
 
         &:hover {
           transform: scale(1.07);
@@ -176,12 +181,24 @@
           transform: translateY(3px);
         }
       }
+      button {
+        border-radius: 20px;
+        padding: 5px;
+        margin-left: 20px;
+        font-size: 0.9rem;
+        height: 35px;
+        
+        img {
+          width: 20px;
+          margin-left: 10px;
+        }
+      }
     }
     .card-footer {
       display: flex;
       align-items: center;
       justify-content: center;
-      justify-content: space-between;
+      justify-content: space-evenly;
       padding: 12px 0 4px;
 
       img {
@@ -198,6 +215,11 @@
       .like-container {
         display: flex;
         align-items: center;
+        justify-content: right;
+       button:hover{
+         background: $color-2;
+         color: $color-1;
+       }
 
         span {
           font-size: 1.02rem;
@@ -396,6 +418,7 @@
         margin: 0;
         margin-left: 5px;
         width: 150px;
+        color: $color-2;
 
         &:nth-child(1) {
           background: $color-1;
