@@ -1,11 +1,23 @@
 import axios from "axios";
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { updatePost } from "../../redux/actions/post.actions";
 // import DeletePost from "./DeletePost";
 import Confirm from "../Profil/Confirm";
 import { DELETE_POST } from "../../redux/actions/post.actions";
 import LikeButton from "./LikeButton";
+import CardComments from "./CardComments";
+import { Link  } from "react-router-dom";
+
+
+export const isEmpty = (value) => {
+   return (
+     value === undefined ||
+     value === null ||
+     (typeof value === "object" && Object.keys(value).length === 0) ||
+     (typeof value === "string" && value.trim().length === 0)
+   );
+ };
 
 const Card = ({ post }, props) => {
   const dispatch = useDispatch();
@@ -19,6 +31,8 @@ const Card = ({ post }, props) => {
     message: "",
     isLoading: false,
   });
+
+// Delete Post 
   const handleConfirm = (message, isLoading) => {
     setConfirm({
       message,
@@ -56,14 +70,6 @@ const Card = ({ post }, props) => {
     setIsUpdated(false);
   };
 
-  const isEmpty = (value) => {
-    return (
-      value === undefined ||
-      value === null ||
-      (typeof value === "object" && Object.keys(value).length === 0) ||
-      (typeof value === "string" && value.trim().length === 0)
-    );
-  };
 
   // DATE PARSER :
   const date = post.createdAt;
@@ -126,7 +132,26 @@ const Card = ({ post }, props) => {
                 </div>
               )}
 
-              {user._id === post.userId && (
+              {user._id === post.userId &&  (
+                <div className="button-container">
+                  <div onClick={() => setIsUpdated(!isUpdated)}>
+                    <span>Modifier mon post</span>
+                    <img src="./img/icons/edit.svg" alt="edit" />
+                  </div>
+
+                  <button className="" onClick={handleDelete}>
+                    Supprimer mon post{" "}
+                    <img src="./img/icons/trash.svg" alt="trash" />
+                  </button>
+                  {confirm.isLoading && (
+                    <Confirm
+                      onConfirm={realConfirm}
+                      message={confirm.message}
+                    />
+                  )}
+                </div>
+              )}
+              {user.isAdmin === true &&  (
                 <div className="button-container">
                   <div onClick={() => setIsUpdated(!isUpdated)}>
                     <span>Modifier mon post</span>
@@ -151,6 +176,8 @@ const Card = ({ post }, props) => {
               
             </div>
             <div className="card-footer">
+            <Link to={{pathname: `/${post._id}`}}className="card-footer__text-link"> Voir publication</Link>
+            
                <div className="comment-icon">
                <img
                   onClick={() => setShowComments(!showComments)}
@@ -162,7 +189,7 @@ const Card = ({ post }, props) => {
                <LikeButton post={post} />
               
             </div>
-            
+            {showComments && <CardComments post={post} />}
           </div>
           
         </>
@@ -170,5 +197,7 @@ const Card = ({ post }, props) => {
     </li>
   );
 };
+
+
 
 export default Card;

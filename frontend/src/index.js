@@ -8,6 +8,8 @@ import { composeWithDevTools } from "redux-devtools-extension";
 import rootReducer  from "./redux/reducers";
 import thunk from "redux-thunk";
 import { getUsers } from "./redux/actions/users.actions";
+import { getPosts } from "./redux/actions/post.actions";
+
 
 const store = createStore(
    rootReducer,
@@ -15,6 +17,8 @@ const store = createStore(
  );
 
 store.dispatch(getUsers());
+store.dispatch(getPosts());
+
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(

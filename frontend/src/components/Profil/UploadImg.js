@@ -1,23 +1,25 @@
 import React, { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { uploadPicture } from "../../redux/actions/user.actions";
-import { UidContext } from "../../components/AppContext";
+// import axios from "axios";
+// import { GET_USER_ERRORS } from "../../redux/actions/user.actions";
+// import { UPLOAD_PICTURE } from "../../redux/actions/user.actions";
+// import { UidContext } from "../../components/AppContext";
 // import { UPLOAD_PICTURE } from "../../redux/features/authSlice";
 
 const UploadImg = () => {
   const [file, setFile] = useState();
   const dispatch = useDispatch();
-  const user = useSelector((store) => store.userData.user);
- 
+  const user = useSelector((store) => store.userData);
+
+  const data = new FormData();
+  data.append("file", file);
+  data.append("pseudo", user.pseudo);
+  data.append("userId", user._id);
 
 //  On Submit function
-  const handlePicture = async (e) => {
+  const handlePicture = (e) => {
     e.preventDefault();
-    const data = new FormData();
-    data.append("file", file);
-    data.append("pseudo", user.pseudo);
-    data.append("userId", user._id);
-   // const datUid = ({data, uid})
     dispatch(uploadPicture( data, user._id ));
   };
 

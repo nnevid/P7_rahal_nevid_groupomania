@@ -27,8 +27,7 @@ const userSchema = mongoose.Schema(
     },
     picture: {
       type: String,
-      default: "./uploads/profil/Portrait_Placeholder.png",
-    },
+     },
     bio: {
       type: String,
       maxLength: 1024,

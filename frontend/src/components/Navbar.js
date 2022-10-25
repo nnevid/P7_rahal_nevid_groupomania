@@ -9,8 +9,6 @@ const Navbar = () => {
    const uid = useContext(UidContext);
    const user = useSelector((store) => (store.userData));
  
-   
-   
   
 
   return (

@@ -50,7 +50,7 @@ exports.deleteUser = (req, res, next) => {
 // Rename user profile picture after upload(needs multer-config middleware).
 exports.uploadProfile = async (req, res) => {
   const fileName = req.body.userId + ".jpg";
-  
+
   try {
     if (
       req.file.mimetype != "image/jpg" &&
@@ -59,30 +59,28 @@ exports.uploadProfile = async (req, res) => {
     )
       throw Error("fichier invalide");
     if (req.file.size > 500000) throw Error(`max size`);
-    
-   //  return res.status(201).json({ message: "Téléchargement réussi!" });
-    
+
+    //  return res.status(201).json({ message: "Téléchargement réussi!" });
   } catch (err) {
     const errors = uploadError(err);
-    return res.status(400).json({ errors });
+    return res.status(201).json({ errors });
   }
-  
+
   if (req.file) {
-   fs.renameSync(req.file.path, req.file.destination + fileName);
-   console.log(fileName);
- }
-  
-try{await User.findOneAndUpdate(
-   req.body.userId,
-   { $set: {picture: './uploads/profil/' + fileName}},
-   {new: true, upsert:true, setDefaultsOnInsert: true},
-     )
-   return res.status(201).json({ message: "Téléchargement réussi!" });
-  ;}
-  catch (err) {
-   
-   return res.status(400).json({ err });
- }
-  
-  
+    fs.renameSync(req.file.path, req.file.destination + fileName);
+   //  console.log(fileName);
+  }
+
+  try {
+    await User.findByIdAndUpdate(
+      req.body.userId,
+      { $set: { picture: "./uploads/profil/" + fileName } },
+      { new: true, upsert: true, setDefaultsOnInsert: true, strict:false })
+      // .then((data) => res.send(data))
+      // .catch((err) => res.status(500).send({ message: err }));
+      // console.log(req.body.userId);
+    return res.status(201).json( req.file );
+  } catch (err) {
+    return res.status(500).send({  err });
+  }
 };

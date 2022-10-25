@@ -16,14 +16,12 @@ exports.getAllPosts = (req, res, next) => {
 // Create Post
 exports.createPost = (req, res) => {
   const postObject = req.body;
-  console.log(req.file);
   delete postObject._id;
   delete postObject._userId;
   const post = new Post({
     ...postObject,
-     imageUrl: `./uploads/posts/${
-       req.file.filename
-     }`,
+   //   imageUrl: `./uploads/posts/${req.file.filename}`,
+     imageUrl: req.file !== null ? `./uploads/posts/${req.file.filename}` : "",
   });
   post
     .save()
@@ -105,7 +103,7 @@ exports.getOnePost = (req, res) => {
     .catch((error) => res.status(404).json({ error: error }));
 };
 
-// Like and unlike Post
+// Like Post
 exports.likePost = (req, res) => { 
    const postId = req.params.id;
   const userId = req.body.userId;
@@ -117,7 +115,8 @@ exports.likePost = (req, res) => {
       {
         $inc: { likes: like },
         $push: { usersLiked: userId },
-      }
+      },
+      {new : true}
     )
       .then((post) => res.status(200).json(post)
       )
@@ -126,7 +125,7 @@ exports.likePost = (req, res) => {
 
 }
   
-   
+// Unlike post - taking back like
 exports.unLikePost = (req, res) => {
    const postId = req.params.id;
    const userId = req.body.userId;
@@ -154,28 +153,7 @@ exports.unLikePost = (req, res) => {
  }
 
 
-//   } else {
-//     Post.findOne({ _id: postId })
-//       .then((post) => {
-//         if (post.usersLiked.includes(userId)) {
-//           Post.findByIdAndUpdate(
-//             { _id: postId },
-//             {
-//               $pull: { usersLiked: userId },
-//               $inc: { likes: -1 },
-//             }
-//           )
-//             .then((post) => {
-//               res
-//                 .status(200)
-//                 .json({ message: "Je n'aime plus cette publication!" + {post} });
-//             })
-//             .catch((error) => res.status(500).json({ error }));
-//         }
-//       })
-//       .catch((error) => res.status(401).json({ error }));
-//   }
-// };
+
 
 exports.commentPost = (req, res) => {
   if (!ObjectID.isValid(req.params.id))
@@ -203,6 +181,8 @@ exports.commentPost = (req, res) => {
     return res.status(400).send(err);
   }
 };
+
+
 exports.editComment = (req, res) => {
   if (!ObjectID.isValid(req.params.id))
     return res.status(400).send("Id inconnu:" + req.params.id);

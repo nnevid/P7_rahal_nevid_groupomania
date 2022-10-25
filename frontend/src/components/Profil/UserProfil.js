@@ -12,6 +12,8 @@ const UserProfil = () => {
   
   const [bio, setBio] = useState("");
   const [updateForm, setUpdateForm] = useState(false);
+  const error = useSelector((state) => state.errorData.userError);
+//   console.log(error);
   const [confirm, setConfirm] = useState({
     message: "",
     isLoading: false,
@@ -31,7 +33,7 @@ const UserProfil = () => {
     setUpdateForm(false);
     
     }
-//   Confirmation Pop-up
+// Delete profile  Confirmation Pop-up
   const handleConfirm = (message, isLoading) => {
     setConfirm({
       message,
@@ -62,10 +64,10 @@ const UserProfil = () => {
       <div className="update-container">
         <div className="left-part">
           <h3>Photo de Profil </h3>
-          <img src={"./uploads/profil/" + user._id + ".jpg"} alt="User" />
+          <img src={user.picture} alt="User" />
           <UploadImg />
-          <p></p>
-          <p></p>
+          <p>{error.format}</p>
+          <p>{error.maxSize}</p>
         </div>
         <div className="right-part">
           <div className="bio-update">

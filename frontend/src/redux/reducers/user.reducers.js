@@ -13,6 +13,7 @@ export default function userReducer(state = initialState, action) {
     case GET_USER:
       return action.payload
     case UPLOAD_PICTURE:
+      console.log(action.payload);
       return {
         ...state,
         picture: action.payload,
