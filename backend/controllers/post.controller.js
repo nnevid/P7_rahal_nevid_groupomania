@@ -104,57 +104,59 @@ exports.getOnePost = (req, res) => {
 };
 
 // Like Post
-exports.likePost = (req, res) => { 
-   const postId = req.params.id;
-  const userId = req.body.userId;
-  const like = req.body.like;
+module.exports.likePost = async (req, res) => {
+   if (!ObjectID.isValid(req.params.id))
+     return res.status(400).send("ID unknown : " + req.params.id);
+ 
+   try {
+     await Post.findByIdAndUpdate(
+       req.params.id,
+       {
+         $addToSet: { usersLiked: req.body.id },
+       },
+       { new: true })
+  
+ 
+     await User.findByIdAndUpdate(
+       req.body.id,
+       {
+         $addToSet: { likes: req.params.id },
+       },
+       { new: true })
+             .then((data) => res.send(data))
+             .catch((err) => res.status(500).send({ message: err }));
+     } catch (err) {
+         return res.status(400).send(err);
+     }
+ };
 
-  if (like === 1) {
-    Post.findByIdAndUpdate(
-      { _id: postId },
-      {
-        $inc: { likes: like },
-        $push: { usersLiked: userId },
-      },
-      {new : true}
-    )
-      .then((post) => res.status(200).json(post)
-      )
-      .catch((error) => res.status(500).json(error.message ));
-   }
-
-}
   
 // Unlike post - taking back like
-exports.unLikePost = (req, res) => {
-   const postId = req.params.id;
-   const userId = req.body.userId;
-   // const like = req.body.like;
-   Post.findOne({ _id: postId })
-   .then((post) => {
-      if (post.usersLiked.includes(userId)) {
-        Post.findByIdAndUpdate(
-          { _id: postId },
-          {
-            $pull: { usersLiked: userId },
-            $inc: { likes: -1 },
-          },
-          {new : true}
-        )
-          .then((post) => {
-            res
-              .status(200)
-              .json(post);
-          })
-          .catch((error) => res.status(500).json({ error }));
-      }
-    })
-    .catch((error) => res.status(401).json({ error: message })); 
- }
-
-
-
-
+module.exports.unLikePost = async (req, res) => {
+   if (!ObjectID.isValid(req.params.id))
+     return res.status(400).send("ID unknown : " + req.params.id);
+ 
+   try {
+     await Post.findByIdAndUpdate(
+       req.params.id,
+       {
+         $pull: { usersLiked: req.body.id },
+       },
+       { new: true })
+        
+ 
+     await User.findByIdAndUpdate(
+       req.body.id,
+       {
+         $pull: { likes: req.params.id },
+       },
+       { new: true })
+             .then((data) => res.send(data))
+             .catch((err) => res.status(500).send({ message: err }));
+     } catch (err) {
+         return res.status(400).send(err);
+     }
+ };
 exports.commentPost = (req, res) => {
   if (!ObjectID.isValid(req.params.id))
     return res.status(400).send("Id inconnu:" + req.params.id);

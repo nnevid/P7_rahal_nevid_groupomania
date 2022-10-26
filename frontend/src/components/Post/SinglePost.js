@@ -1,15 +1,15 @@
 import React, { useState, useEffect } from "react";
+import axios from "axios";
 import LeftNav from "../LeftNav";
+import CardComments from "./CardComments";
+import LikeButton from "./LikeButton";
 import { useSelector, useDispatch } from "react-redux";
 import { useParams } from "react-router-dom";
-import axios from "axios";
-import { DELETE_POST } from "../../redux/actions/post.actions";
-import LikeButton from "./LikeButton";
-import CardComments from "./CardComments";
-import { updatePost } from "../../redux/actions/post.actions";
-import { getSinglePost } from "../../redux/actions/single.post.action";
 import Confirm from "../Profil/Confirm";
-import { isEmpty } from "./Card";
+import { DELETE_POST } from "../../redux/actions/post.actions";
+import { updateSinglePost } from "../../redux/actions/single.post.action";
+import { getSinglePost } from "../../redux/actions/single.post.action";
+// import { isEmpty } from "./Card";
 
 const SinglePost = () => {
   const dispatch = useDispatch();
@@ -17,7 +17,9 @@ const SinglePost = () => {
   const usersData = useSelector((store) => store.allUsersData.users);
   const user = useSelector((store) => store.userData);
   const postLoad = useSelector((store) => store.singlePost.loading);
-  const post = useSelector((store) => store.singlePost.post);
+  const post = useSelector((store) => store.singlePost);
+  
+ 
   const [isUpdated, setIsUpdated] = useState(false);
   const [textUpdate, setTextUpdate] = useState(null);
   const [showComments, setShowComments] = useState(false);
@@ -64,8 +66,8 @@ const SinglePost = () => {
 
   const updateItem = () => {
     if (textUpdate) {
-      dispatch(updatePost(post._id, textUpdate));
-    }
+      dispatch(updateSinglePost(post._id, textUpdate));
+      }
     setIsUpdated(false);
   };
 

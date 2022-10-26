@@ -48,15 +48,3 @@ app.use('/api/post', postRoutes);
 app.use('./frontend/public/uploads/profil', express.static(path.join(__dirname, './frontend/public/uploads/profil')));
 // app.use('/images', express.static(path.join(__dirname, './frontend/public/uploads/posts')));
 module.exports = app;
-
-// module.exports = {
-   
-//    devServer: {
-//      watchOptions: {
-//        ignored: [
-//          path.resolve(__dirname, './frontend/public/uploads/profil')
-//        ]
-//      }
-//    }
-
-//  }

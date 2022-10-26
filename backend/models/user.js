@@ -27,7 +27,7 @@ const userSchema = mongoose.Schema(
     },
     picture: {
       type: String,
-     },
+    },
     bio: {
       type: String,
       maxLength: 1024,
@@ -36,6 +36,9 @@ const userSchema = mongoose.Schema(
       type: Boolean,
       required: true,
       default: false,
+    },
+    likes: {
+      type: [String]
     },
   },
   {

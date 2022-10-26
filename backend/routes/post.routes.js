@@ -10,8 +10,8 @@ router.post('/',  requireAuth, multerPosts, postCtrl.createPost);
 router.put('/:id', requireAuth, multerPosts, postCtrl.modifyPost);
 router.delete('/:id', requireAuth, postCtrl.deletePost);
 router.get('/:id', requireAuth, postCtrl.getOnePost);
-router.post('/like/:id', requireAuth, postCtrl.likePost);
-router.post('/unlike/:id', requireAuth, postCtrl.unLikePost);
+router.patch('/like/:id',  postCtrl.likePost);
+router.patch('/unlike/:id',  postCtrl.unLikePost);
 
 // comments pas activés pour l'instant
 router.patch('/comment/:id', requireAuth, postCtrl.commentPost);

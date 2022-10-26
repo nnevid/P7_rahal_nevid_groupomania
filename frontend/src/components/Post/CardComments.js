@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { addComment, getPosts } from "../../redux/actions/post.actions";
+import { getSinglePost } from "../../redux/actions/single.post.action";
 import { isEmpty } from "./Card";
 import EditDeleteComment from "./EditDeleteComment";
 
@@ -35,6 +36,7 @@ const CardComments = ({post}) => {
       if (text) {
         dispatch(addComment(post._id, user._id, text, user.pseudo))
           .then(() => dispatch(getPosts()))
+          .then(() => dispatch(getSinglePost(post._id)))
           .then(() => setText(''));
       }
     };

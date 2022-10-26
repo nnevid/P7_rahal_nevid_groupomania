@@ -2,12 +2,12 @@ import axios from "axios";
 import React, { useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { updatePost } from "../../redux/actions/post.actions";
-// import DeletePost from "./DeletePost";
 import Confirm from "../Profil/Confirm";
 import { DELETE_POST } from "../../redux/actions/post.actions";
 import LikeButton from "./LikeButton";
 import CardComments from "./CardComments";
 import { Link  } from "react-router-dom";
+
 
 
 export const isEmpty = (value) => {
@@ -82,9 +82,11 @@ const Card = ({ post }, props) => {
 
   return (
     <li className="card-container" key={post._id}>
-      {isLoading ? (
-        <i className="fas fa-spinner fa-spin"></i>
-      ) : (
+      {isLoading ? ( 
+
+         <i className="fas fa-spinner fa-spin"></i>
+      )
+       : (
         <>
           <div className="card-left">
             <img
@@ -177,7 +179,6 @@ const Card = ({ post }, props) => {
             </div>
             <div className="card-footer">
             <Link to={{pathname: `/${post._id}`}}className="card-footer__text-link"> Voir publication</Link>
-            
                <div className="comment-icon">
                <img
                   onClick={() => setShowComments(!showComments)}

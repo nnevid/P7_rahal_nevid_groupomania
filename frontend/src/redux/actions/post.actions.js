@@ -62,39 +62,69 @@ export const addPost = (data) => {
   };
 };
 
-export const likePost = (postId, userId, like) => {
-  return (dispatch) => {
-    return axios({
-      method: "post",
-      url: `${process.env.REACT_APP_API_URL}api/post/like/${postId}`,
-      withCredentials: true,
-      data: {
-        userId,
-        like,
-      },
-    })
-      .then((res) => {
-        dispatch({ type: LIKE_POST, payload: { postId, userId } });
-      })
-      .catch((err) => console.log(err.message));
-  };
-};
-export const unlikePost = (postId, userId) => {
-  return (dispatch) => {
-    return axios({
-      method: "post",
-      url: `${process.env.REACT_APP_API_URL}api/post/unlike/${postId}`,
-      withCredentials: true,
-      data: {
-        userId,
-      },
-    })
-      .then((res) => {
-        dispatch({ type: UNLIKE_POST, payload: { postId, userId } });
-      })
-      .catch((err) => console.log(err.message));
-  };
-};
+// export const likePost = (postId, userId, like) => {
+//   return (dispatch) => {
+//     return axios({
+//       method: "post",
+//       url: `${process.env.REACT_APP_API_URL}api/post/like/${postId}`,
+//       withCredentials: true,
+//       data: {
+//         userId,
+//         like,
+//       },
+//     })
+//       .then((res) => {
+//         dispatch({ type: LIKE_POST, payload: { postId, userId } });
+//       })
+//       .catch((err) => console.log(err.message));
+//   };
+// };
+export const likePost = (postId, userId) => {
+   return (dispatch) => {
+     return axios({
+       method: "patch",
+       url: `${process.env.REACT_APP_API_URL}api/post/like/` + postId,
+       data: { id: userId },
+       withCredentials: true,
+     })
+       .then((res) => {
+         dispatch({ type: LIKE_POST, payload: { postId, userId } });
+       })
+       .catch((err) => console.log(err));
+   };
+ };
+
+ export const unlikePost = (postId, userId) => {
+   return (dispatch) => {
+     return axios({
+       method: "patch",
+       url: `${process.env.REACT_APP_API_URL}api/post/unlike/` + postId,
+       withCredentials: true,
+       data: { id: userId },
+     })
+       .then((res) => {
+         dispatch({ type: UNLIKE_POST, payload: { postId, userId } });
+       })
+       .catch((err) => console.log(err));
+   };
+ };
+
+// export const unlikePost = (postId, userId) => {
+//   return (dispatch) => {
+//     return axios({
+//       method: "post",
+//       url: `${process.env.REACT_APP_API_URL}api/post/unlike/${postId}`,
+//       withCredentials: true,
+//       data: {
+//         userId,
+//       },
+//     })
+//       .then((res) => {
+//         dispatch({ type: UNLIKE_POST, payload: { postId, userId } });
+//       })
+//       .catch((err) => console.log(err.message));
+//   };
+// };
 export const addComment = (postId, commenterId, text, commenterPseudo) => {
   return (dispatch) => {
     return axios({

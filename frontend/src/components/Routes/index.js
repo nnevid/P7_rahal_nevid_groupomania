@@ -4,7 +4,8 @@ import Home from "../../pages/Home";
 import Posts from "../../pages/Posts";
 import Profil from "../../pages/Profil";
 import Navbar from "../Navbar";
-import SinglePost from "../Post/SinglePost";
+
+import Single from "../../pages/Single";
 const index = () => {
   return (
     <div>
@@ -14,7 +15,7 @@ const index = () => {
         <Route path="/" exact component={Home} />
           <Route path="/posts" exact component={Posts} />
           <Route path="/profil" exact component={Profil} />
-          <Route path='/:id' component={SinglePost}/>
+          <Route path='/:id' component={Single}/>
           
           <Redirect to='/' />
         </Switch>

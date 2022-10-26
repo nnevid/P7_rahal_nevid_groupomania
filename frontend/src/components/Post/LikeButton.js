@@ -1,34 +1,18 @@
 import React, { useContext, useEffect, useState } from "react";
 import { UidContext } from "../AppContext";
-// import Popup from "reactjs-popup";
 import "reactjs-popup/dist/index.css";
 import { useDispatch } from "react-redux";
 import { likePost, unlikePost } from "../../redux/actions/post.actions";
-// import axios from "axios";
-// import { LIKE_POST } from "../../redux/actions/post.actions";
+
 
 const LikeButton = ({ post }) => {
   const [liked, setLiked] = useState(false);
-  const [like, setLike] = useState(0);
+//   const [like, setLike] = useState(0);
   const uid = useContext(UidContext);
   const dispatch = useDispatch();
-  //   const likePost = (postId, userId, like) => {
-
-  //    return (dispatch) => {
-  //      return axios({
-  //        method: "post",
-  //        url: `${process.env.REACT_APP_API_URL}api/post/like/${postId}` ,
-  //        withCredentials: true,
-  //      })
-  //        .then((res) => {
-  //          dispatch({ type: LIKE_POST, payload: { postId, userId } });
-  //        })
-  //        .catch((err) => console.log(err));
-  //    };
-  //  };
+  
   const handleLike = () => {
-    dispatch(likePost(post._id, uid, like));
-    setLike(1);
+    dispatch(likePost(post._id, uid,));
     setLiked(true);
   };
   const unlike = () => {
