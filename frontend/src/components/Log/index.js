@@ -17,6 +17,7 @@ const Log = ( props) => {
   };
   return (
     <section className="connection-form">
+      
       <div className="form-container">
         <ul>
           <li
@@ -30,9 +31,11 @@ const Log = ( props) => {
           className={logInModal ? "active-btn" : null}>
             Connexion
           </li>
+         
         </ul>
         {signUpModal && <SignUpForm />}
         {logInModal && <LogInForm />}
+      
       </div>
     </section>
   );

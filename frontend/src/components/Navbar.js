@@ -14,13 +14,13 @@ const Navbar = () => {
   return (
     <nav>
       <div className="nav-container">
-        <div className="logo">
+        <div >
           <NavLink exact to="/">
             <div className="logo">
               <img src="./img/logo-grupomania.svg" alt="Grupomania logo" />
-              <span className="nav-container__coname">Grupomania</span><br/>
-            </div>
+              <span className="nav-container__coname">Grupomania</span>
               <span className="nav-container__slogan">Le réseau des collègues !</span>              
+            </div>
           </NavLink>
         </div>
         {uid ? (

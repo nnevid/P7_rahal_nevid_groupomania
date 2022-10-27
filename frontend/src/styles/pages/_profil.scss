@@ -2,6 +2,22 @@
   margin: 140px auto 0;
   max-width: 1200px;
 
+  &__heading {
+    font-size: 1.7rem;
+    text-align: center;
+    @media screen and(max-width: 885px) {
+      font-size: 1.2rem;
+    }
+  }
+  &__message {
+    text-align: center;
+    @media screen and(max-width: 885px) {
+      font-size: 1rem;
+      max-width: 400px;
+      margin: 0px auto;
+    }
+  }
+
   .icons {
     top: 135px;
     left: 30px;
@@ -11,6 +27,16 @@
     margin: 0 auto;
     display: grid;
     grid-template-columns: 60% 40%;
+    background-image: linear-gradient(
+        to bottom,
+        rgba(255, 255, 255, 0.902),
+        rgba(0, 0, 0, 0.5)
+      ),
+      url("../../../public/img/bg_1.svg");
+    background-size: cover;
+    background-position: center;
+    opacity: 1; /*Value from 0.0 to 1.0*/
+    border-radius: 20px;
 
     @media screen and(max-width: 885px) {
       grid-template-columns: 1fr;
@@ -125,6 +151,13 @@
   .update-container {
     display: grid;
     grid-template-columns: 50% 50%;
+    background-image: linear-gradient(
+        to bottom,
+        rgba(255, 255, 255, 0.902),
+        rgba(0, 0, 0, 0.5)
+      ),
+      url("../../../public/img/bg_1.svg");
+      border-radius: 20px;
 
     @media screen and(max-width: 700px) {
       grid-template-columns: 1fr;
@@ -169,7 +202,7 @@
           padding: 9px 0;
           margin-bottom: 20px;
           font-family: $font-1;
-          border: solid 1px #ff7b77
+          border: solid 1px #ff7b77;
         }
         input[type="file"] {
           margin-top: 15px;
@@ -235,7 +268,6 @@
       }
       button {
         margin: 5px 0;
-        
       }
       h4 {
         margin: 20px 0 10px;

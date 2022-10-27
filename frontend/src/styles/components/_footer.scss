@@ -1,0 +1,18 @@
+.footer{
+   min-height: 50px;
+   text-align: center;
+   color: $color-2;
+   font-size: 1rem;
+   background-color: $color-1;
+   font-family: $font-1;
+   display: flex;
+   justify-content: space-evenly;
+
+   @media screen and(max-width: 885px) {
+      font-size: 0.9rem;
+   }
+   @media screen and(max-width: 590px) {
+      font-size: 0.8rem;
+      flex-wrap: wrap;
+   }
+}

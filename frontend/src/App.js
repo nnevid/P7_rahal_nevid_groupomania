@@ -4,6 +4,7 @@ import Routes from "./components/Routes";
 import axios from "axios";
 import { useDispatch } from "react-redux";
 import { getUser } from "./redux/actions/user.actions";
+import Footer from "./components/Footer";
 
 
 function App() {
@@ -30,6 +31,7 @@ function App() {
   return (
     <UidContext.Provider value={uid}>
       <Routes />
+      <Footer/>
     </UidContext.Provider>
   );
 }

@@ -38,10 +38,20 @@ nav {
       font-family: $font-3;
       font-size: 2.2rem;
       margin-left: 5px;
+      @media screen and(max-width: 590px) {
+         font-size: 1rem;
+      }
     }
     &__slogan {
       color: $color-3;
-      margin-left: 70px;
+      position:absolute;
+      left:26%;
+      top:80%;
+        @media screen and(max-width: 590px) {
+         font-size: 0.8rem;
+         left:12%;
+         top:60%;
+        }
     }
     &__logs {
       color: $color-1;
@@ -50,6 +60,10 @@ nav {
     .logo {
       display: flex;
       align-items: center;
+      position: relative;
+      @media screen and(max-width: 590px) {
+         min-width: 300px;
+      }
 
       h3 {
         transform: translate(15px, 2px);
@@ -59,6 +73,10 @@ nav {
       img {
         height: 60px;
         width: 60px;
+        @media screen and(max-width: 590px) {
+         height: 30px;
+        width: 30px;
+        }
       }
     }
 
@@ -69,7 +87,7 @@ nav {
       width: 35%;
       justify-content: space-between;
       font-size: 1.2rem;
-
+   
       .welcome {
         transform: translateY(2px);
 
@@ -92,6 +110,9 @@ nav {
           justify-items: center;
           height: 100%;
         }
+      }
+      @media screen and(max-width: 590px) {
+         display: none;
       }
     }
   }

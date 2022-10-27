@@ -3,9 +3,33 @@
   max-width: 1200px;
   grid-template-columns: 60px 1fr 374px;
   overflow: hidden;
-  margin: 58px auto 50px;
+  margin: 110px auto 50px;
   position: relative;
+//   background-image: linear-gradient(
+//       to bottom,
+//       rgba(250, 126, 85, 0.5),
+//       rgba(15, 9, 7, 0.5)
+//     ),
 
+
+&:before{
+   content: "";
+    position: absolute;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    z-index: -1;
+    background-image: linear-gradient(
+           to bottom,
+             rgba(255, 255, 255, 0.902),
+            rgba(0, 0, 0, 0.5)
+           ),url("../../../public/img/bg_1.svg"); 
+    background-size: cover;
+    background-position: center;
+    opacity: 1; /*Value from 0.0 to 1.0*/
+    border-radius: 20px;
+}
   @media screen and(max-width: 990px) {
     grid-template-columns: 60px 1fr;
     margin: 58px 20px 50px;
@@ -13,14 +37,32 @@
 
   @media screen and(max-width: 590px) {
     grid-template-columns: 1fr;
-    margin: 58px 8px 50px;
+    margin: 30px 8px 50px;
   }
   .icons {
     top: 135px;
     left: 30px;
   }
+
+  &__img {
+    width: 302px;
+    position: absolute;
+    top: 38%;
+    right: 22%;
+    @media screen and(max-width: 990px) {
+      width: 200px;
+      top: 48%;
+      left: 3%;
+    }
+    @media screen and(max-width: 590px) {
+      display: none;
+    }
+  }
   .main {
-   margin-top: 120px;
+    margin: 116px 0px 60px 51px;
+    @media screen and(max-width: 590px) {
+      margin: 116px 0px 60px 0px;
+    }
     .home-header {
       margin: 0 auto 12px;
       text-align: center;
