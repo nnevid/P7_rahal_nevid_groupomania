@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { getPosts } from "../redux/actions/post.actions";
+import { getSinglePost } from "../redux/actions/single.post.action";
 import Card from "./Post/Card";
 import { isEmpty } from "./Post/Card";
 
@@ -17,6 +18,7 @@ const Thread = () => {
   useEffect(() => {
     if (loadPost) {
       dispatch(getPosts(count));
+      dispatch(getSinglePost())
       setLoadPost(false);
       setCount(count + 5);
     }

@@ -3,6 +3,7 @@ import { UidContext } from "../AppContext";
 import "reactjs-popup/dist/index.css";
 import { useDispatch } from "react-redux";
 import { likePost, unlikePost } from "../../redux/actions/post.actions";
+import { getSinglePost } from "../../redux/actions/single.post.action";
 
 
 const LikeButton = ({ post }) => {
@@ -13,9 +14,11 @@ const LikeButton = ({ post }) => {
   
   const handleLike = () => {
     dispatch(likePost(post._id, uid,));
+    dispatch(getSinglePost(post._id))
     setLiked(true);
   };
   const unlike = () => {
+     dispatch(getSinglePost(post._id))
     dispatch(unlikePost(post._id, uid));
     setLiked(false);
   };
