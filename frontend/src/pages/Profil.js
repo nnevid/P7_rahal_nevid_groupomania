@@ -14,7 +14,7 @@ const Profil = () => {
         <UserProfil />
       ) : (
          <>
-         <h2 className="profil-page__heading">Bienvenue chez Grupomania!</h2>
+         <h2 className="profil-page__heading">Bienvenue chez Groupomania!</h2>
       <br />
       <h4 className="profil-page__message">
         👉🏽 Créez votre compte ou connectez-vous et commencez à partager avec vos

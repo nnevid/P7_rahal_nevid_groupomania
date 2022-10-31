@@ -14,7 +14,7 @@ const Home = () => {
           <Thread />
         ) : (
           <div className="home-header">
-            <h2>Bienvenue chez Grupomania !</h2>
+            <h2>Bienvenue chez Groupomania !</h2>
             <br />
             <h4>
               👉🏽 Créez votre compte ou connectez-vous et commencez à partager

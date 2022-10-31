@@ -41,7 +41,7 @@ const UserProfil = () => {
     });
   };
   const handleDelete = () => {
-    handleConfirm("Supprimer votre compte Grupomania ?", true);
+    handleConfirm("Supprimer votre compte Groupomania ?", true);
   };
 
   const realConfirm = async (yes) => {
