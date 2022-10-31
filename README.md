@@ -1,4 +1,4 @@
-# Bonjour, ceci est le projet "Grupomania" d'OpenClassrooms.
+# Bonjour, ceci est le projet "Groupomania" d'OpenClassrooms.
 ##Fait avec React, Node, MongoDB et Express
 Pour démarrer le projet vous aurez besoin des fichiers `.env` qui seront envoyés annexes sur l'espace OpenClassrooms.
 
